@@ -1,3 +1,40 @@
-main {
-  background-color: black;
+$backgroundColor: #565656;
+$boxColor: #D7CEC7;
+$shadowColor: #C09F80;
+$navHoverColor: #73323F;
+
+html {
+  nav {
+    font-family: 'Titillium Web', sans-serif;
+    i {
+      font-size: 30px;
+      color: $boxColor;
+    }
+    .nav-link {
+      color: $boxColor !important;
+      &:hover {
+        color: $shadowColor !important;
+      }
+    }
+  }
+  body {
+    font-family: 'Titillium Web', sans-serif;
+    background-color: $backgroundColor;
+    div.row {
+      &.vdivide [class*='col-']:not(:last-child):after {
+        background: $navHoverColor;
+        box-shadow: 0px 0px 4px 2px $navHoverColor;
+        margin: 6px 0;
+        content: "";
+        display: block;
+        position: absolute;
+        top:0;
+        bottom: 0;
+        right: 0;
+      }
+      background-color: $boxColor;
+      box-shadow: 0px 0px 36px 3px $shadowColor;
+      border-radius: 7px;
+    }
+  }
 }
