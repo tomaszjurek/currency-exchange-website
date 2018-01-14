@@ -1,0 +1,16 @@
+nav {
+  font-family: 'Titillium Web', sans-serif;
+  i {
+    font-size: 30px;
+    color: $boxColor;
+    &:hover {
+      color: $shadowColor;
+    }
+  }
+  .nav-link {
+    color: $boxColor !important;
+    &:hover {
+      color: $shadowColor !important;
+    }
+  }
+}

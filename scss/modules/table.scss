@@ -1,0 +1,9 @@
+table, th, td {
+  text-align: center;
+}
+tbody tr:nth-child(odd) {
+  background-color: darken($boxColor, 10%);
+}
+.table td, .table th {
+  border-color: $navHoverColor !important;
+}
