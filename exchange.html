@@ -13,7 +13,7 @@
   <header>
     <div class="container">
       <nav class="navbar navbar-expand-lg navbar-light">
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand" href="index.html">
           <i class="far fa-money-bill-alt"></i>
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -35,19 +35,27 @@
   <body>
     <div class="container">
       <div class="row vdivide">
-        <div class="col-4">
-          <p>
-            Welcome to Currency Exchange Online
-          </p>
+        <div class="col-5">
+          <table id="currency">
+            <thead>
+              <tr>
+                <th>Currency</th>
+                <th>Bid</th>
+                <th>Ask</th>
+              </tr>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
         </div>
-        <div class="col-8">
+        <div class="col-7">
           Calculator
         </div>
       </div>
     </div>
 
+    <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
     <script src="js/out.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous"></script>
   </body>
 </html>
