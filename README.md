@@ -19,7 +19,3 @@ open index.html file.
 * Bootstrap 4
 * Webpack
 * Gulp
-<<<<<<< HEAD
- 
-=======
->>>>>>> c587071fce81b77090b16aa1492dbc73c0693a3d
