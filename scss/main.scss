@@ -1,18 +1,5 @@
 @import "modules/colors";
 @import "modules/table";
 @import "modules/nav";
-
-body {
-  font-family: 'Titillium Web', sans-serif;
-  background-color: $backgroundColor;
-  div.row {
-    padding: 20px 0;
-    background-color: $boxColor;
-    box-shadow: 0px 0px 36px 3px $shadowColor;
-    border-radius: 7px;
-  }
-}
-
-.btn {
-  background-color: $shadowColor !important;
-}
+@import "modules/alert";
+@import "modules/body";
