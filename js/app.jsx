@@ -1,16 +1,19 @@
 $(function () {
 
   const nbpApi  = "http://api.nbp.pl/api/exchangerates/tables/c/?format=json";
+  let sumResult = 0,
+      alert = $("div.alert");
 
+// Inject table with currencies
   let insertCurrency = (currency) => {
-    let tableInsert = $("table#currency").find("tbody");
-    let dateInsert = $("table#currency").find("th").first();
+    let tableInsert = $("table#currency").find("tbody"),
+        dateInsert = $("table#currency").find("th").first();
     dateInsert.text(currency.effectiveDate);
     for(let i = 0 ; i < currency.rates.length; i++) {
-        let tr = $("<tr class='active'></tr>");
-        let code = $("<td>").text(currency.rates[i].code);
-        let bid = $("<td>").text(currency.rates[i].bid);
-        let ask = $("<td>").text(currency.rates[i].ask);
+        let tr = $("<tr class='active'></tr>"),
+            code = $("<td>").text(currency.rates[i].code),
+            bid = $("<td>").text(currency.rates[i].bid),
+            ask = $("<td>").text(currency.rates[i].ask);
         tableInsert.append(tr);
         tr.append(code);
         tr.append(bid);
@@ -18,6 +21,7 @@ $(function () {
     };
   }
 
+// inject options to select
   let insertExchange = (currency) => {
     let currencyInsert = $("form#calculatorForm select#currencySelect");
     for(let i = 0 ; i < currency.length; i++) {
@@ -26,6 +30,7 @@ $(function () {
     };
   };
 
+// Ajax
   let loadCurrency = () => {
     $.ajax({
       url: nbpApi
@@ -39,25 +44,47 @@ $(function () {
   };
   loadCurrency();
 
+// Validation for calculator form
+  $("button#check").on("click",	function(event)	{
+    event.preventDefault();
+    let optionSelected = $("select#currencySelect").find(":selected"),
+        checkboxValue = $('input[name=bidAsk]:checked', '#calculatorForm').val(),
+        calculator = $("div#calculator").next(),
+        choosenCurrency = $("div#calculator").find("div.inserted-currency");
 
-    $("button.btn").on("click",	function(event)	{
-      event.preventDefault();
-      let optionSelected = $("select#currencySelect").find(":selected");
-      let checkboxValue = $('input[name=bidAsk]:checked', '#calculatorForm').val()
-      let calculator = $("div#calculator");
-      let choosenCurrency = $("div#calculator p").last();
+    if (checkboxValue === "bid") {
+      choosenCurrency.text(optionSelected.val() + " " + optionSelected.attr("data-bid"));
+      calculator.append(choosenCurrency);
+    } else if (checkboxValue === "ask") {
+      choosenCurrency.text(optionSelected.val() + " " + optionSelected.attr("data-ask"));
+      calculator.append(choosenCurrency);
+    } else if (checkboxValue === undefined) {
+      alert.find("strong").text("Please choose between bid or ask");
+      alert.css("display","block");
+      calculator.append(choosenCurrency);
+    }
+  });
 
-      if (checkboxValue === "bid") {
-        choosenCurrency.text("You have chosen" + " " + optionSelected.val() + " " + optionSelected.attr("data-bid"));
-        calculator.append(choosenCurrency);
-        console.log(optionSelected.attr("data-bid"));
-      } else if (checkboxValue === "ask") {
-        choosenCurrency.text("You have chosen" + " " + optionSelected.val() + " " + optionSelected.attr("data-ask"));
-        calculator.append(choosenCurrency);
-        console.log(optionSelected.attr("data-ask"));
-      } else if (checkboxValue === undefined) {
-        choosenCurrency.text("You need to choose bid or ask");
-        calculator.append(choosenCurrency);
-      }
+// Calculator
+  $("button#exchange").on("click", function(event)	{
+    event.preventDefault();
+    let result,
+        amountInput = $("input[name=amount]").val(),
+        amountInputNumber = parseFloat(amountInput),
+        currency = $("div#calculator p").last().text().substring(4),
+        currencyNumber = parseFloat(currency);
+
+    if (amountInput !== "" & parseFloat(amountInput) > 0) {
+      result = amountInput * currency;
+      // sumResult = sumResult + result;
+      result = "";
+      // console.log($('input[name=bidAsk]:checked', '#calculatorForm').val());
+      // WSTAWIANIE DO LISTY KUPIONYCH RZECZY z przyciskami do usuniecia
+      // Podzial na kupione i sprzedane
+      // na koniec suma wszystkiego
+    } else {
+      alert.find("strong").text("Please enter Your amount or choose bid/ask");
+      alert.css("display","block");
+    }
   });
 });
