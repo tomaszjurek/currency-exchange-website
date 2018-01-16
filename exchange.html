@@ -51,14 +51,23 @@
                 <label for="ask">Ask</label>
                 <input type="radio" name="bidAsk" value="ask">
                 <hr/>
-                <button class="btn" type="submit">Check the price</button>
+                <button id="check" class="btn" type="submit">Check the price</button>
             </form>
           </div>
           <div id="calculator" class="col-7">
             <p><b>Calculator</b></p>
             <hr/>
-            <p></p>
+            <div class="inserted-currency">Here will be Your chosen currency</div>
+            <form id="calculator" action="#" method="post">
+              <label for="chooseAmount">Choose the amount of currency:</label>
+              <input type="text" name="amount" value="">
+              <button id="exchange" class="btn" type="submit">Exchange</button>
+            </form>
           </div>
+        </div>
+        <div class="alert">
+          <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+          <strong></strong>
         </div>
       </div>
     </main>
