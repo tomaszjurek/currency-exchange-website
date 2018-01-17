@@ -1,7 +1,9 @@
 $(function () {
 
   const nbpApi  = "http://api.nbp.pl/api/exchangerates/tables/c/?format=json";
-  let sumResult = 0,
+  let tabResultBid = [],
+      tabResultAsk = [],
+      index = 0,
       alert = $("div.alert");
 
 // Inject table with currencies
@@ -21,7 +23,7 @@ $(function () {
     };
   }
 
-// inject options to select
+// Inject options to select
   let insertExchange = (currency) => {
     let currencyInsert = $("form#calculatorForm select#currencySelect");
     for(let i = 0 ; i < currency.length; i++) {
@@ -59,7 +61,7 @@ $(function () {
       choosenCurrency.text(optionSelected.val() + " " + optionSelected.attr("data-ask"));
       calculator.append(choosenCurrency);
     } else if (checkboxValue === undefined) {
-      alert.find("strong").text("Please choose between bid or ask");
+      alert.find("strong").text("Please choose bid or ask");
       alert.css("display","block");
       calculator.append(choosenCurrency);
     }
@@ -68,23 +70,53 @@ $(function () {
 // Calculator
   $("button#exchange").on("click", function(event)	{
     event.preventDefault();
-    let result,
+    let resultBid,
+        resultAsk,
         amountInput = $("input[name=amount]").val(),
         amountInputNumber = parseFloat(amountInput),
-        currency = $("div#calculator p").last().text().substring(4),
-        currencyNumber = parseFloat(currency);
+        currency = $("div.inserted-currency").text().substring(4),
+        currencyNumber = parseFloat(currency),
+        checkboxValue = $("input[name=bidAsk]:checked", "#calculatorForm").val(),
+        bidAskList = $("div#calculator").find("table#bidAskTable").find("tbody");
 
-    if (amountInput !== "" & parseFloat(amountInput) > 0) {
-      result = amountInput * currency;
-      // sumResult = sumResult + result;
-      result = "";
-      // console.log($('input[name=bidAsk]:checked', '#calculatorForm').val());
-      // WSTAWIANIE DO LISTY KUPIONYCH RZECZY z przyciskami do usuniecia
-      // Podzial na kupione i sprzedane
-      // na koniec suma wszystkiego
+    if (amountInput !== "" & amountInputNumber >= 0) {
+      if (checkboxValue === "bid") {
+        resultBid = amountInputNumber * currencyNumber;
+        resultBid = resultBid.toFixed(2);
+        tabResultBid.push(resultBid);
+        console.log(tabResultBid);
+        let currencyCode = $("div.inserted-currency").text().substring(0,4),
+            tr = $("<tr class='active'></tr>").attr("data-i",index),
+            currencyTd = $("<td>").text(currencyCode),
+            amountTd = $("<td>").text(amountInputNumber),
+            plnTd = $("<td>").text(resultBid),
+            btnDelete = $("<button class='btn delete'>").text("Delete");
+
+            index += 1;
+
+        bidAskList.append(tr);
+        tr.append(currencyTd);
+        tr.append(amountTd);
+        tr.append(plnTd);
+        tr.append(btnDelete);
+        resultBid = 0;
+
+
+
+      } else if (checkboxValue === "ask") {
+        console.log(checkboxValue);
+      }
+
     } else {
       alert.find("strong").text("Please enter Your amount or choose bid/ask");
       alert.css("display","block");
     }
   });
+
+  $("table#bidAskTable").on("click", ".delete", function(){
+    tabResultBid.splice(tabResultBid.indexOf($(this).prev().text()), 1);
+    console.log(tabResultBid);
+    $(this).parent().remove();
+  });
+
 });
