@@ -43,6 +43,7 @@
             <form id="calculatorForm" action="#" method="post">
               <label for="chooseCurrency">Choose Your currency:</label>
               <select class="btn" id="currencySelect" name="currency">
+                <!-- Currencies options -->
               </select>
               <hr/>
               <span>Which one You want?</span>
@@ -57,12 +58,26 @@
           <div id="calculator" class="col-7">
             <p><b>Calculator</b></p>
             <hr/>
-            <div class="inserted-currency">Here will be Your chosen currency</div>
+            <div class="inserted-currency">Your chosen currency</div>
             <form id="calculator" action="#" method="post">
               <label for="chooseAmount">Choose the amount of currency:</label>
-              <input type="text" name="amount" value="">
+              <input type="text" name="amount" value="" >
               <button id="exchange" class="btn" type="submit">Exchange</button>
             </form>
+            <hr/>
+            <table id="bidAskTable" class="table table-hover table-responsive">
+              <thead>
+                <tr>
+                  <th>Sold</th>
+                  <th>Amount</th>
+                  <th>PLN</th>
+                  <th>Delete</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Bid table -->
+              </tbody>
+            </table>
           </div>
         </div>
         <div class="alert">
