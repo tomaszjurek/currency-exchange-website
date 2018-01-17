@@ -7,3 +7,7 @@ tbody tr:nth-child(odd) {
 .table td, .table th {
   border-color: $navHoverColor !important;
 }
+
+.center-table {
+  padding-left: 10px;
+}
