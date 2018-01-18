@@ -3,8 +3,13 @@ $(function () {
   const nbpApi  = "http://api.nbp.pl/api/exchangerates/tables/c/?format=json";
   let tabResultBid = [],
       tabResultAsk = [],
+      totalAsk,
+      totalBid,
       index = 0,
-      alert = $("div.alert");
+      alert = $("div.alert"),
+      bidTable = $("table#bidTable"),
+      askTable = $("table#askTable"),
+      divRow = $("div.row.secondrow");
 
 // Inject table with currencies
   let insertCurrency = (currency) => {
@@ -77,34 +82,62 @@ $(function () {
         currency = $("div.inserted-currency").text().substring(4),
         currencyNumber = parseFloat(currency),
         checkboxValue = $("input[name=bidAsk]:checked", "#calculatorForm").val(),
-        bidAskList = $("div#calculator").find("table#bidAskTable").find("tbody");
+        bidList = $("div.secondrow").find("table#bidTable").find("tbody"),
+        askList = $("div.secondrow").find("table#askTable").find("tbody");
+
 
     if (amountInput !== "" & amountInputNumber >= 0) {
       if (checkboxValue === "bid") {
+        bidTable.css("display","table");
+        divRow.css("display","block");
         resultBid = amountInputNumber * currencyNumber;
         resultBid = resultBid.toFixed(2);
         tabResultBid.push(resultBid);
-        console.log(tabResultBid);
-        let currencyCode = $("div.inserted-currency").text().substring(0,4),
-            tr = $("<tr class='active'></tr>").attr("data-i",index),
-            currencyTd = $("<td>").text(currencyCode),
+        let currencyCodeBid = $("div.inserted-currency").text().substring(0,4),
+            tr = $("<tr class='active'></tr>"),
+            currencyTd = $("<td>").text(currencyCodeBid),
             amountTd = $("<td>").text(amountInputNumber),
             plnTd = $("<td>").text(resultBid),
             btnDelete = $("<button class='btn delete'>").text("Delete");
 
-            index += 1;
-
-        bidAskList.append(tr);
+        bidList.append(tr);
         tr.append(currencyTd);
         tr.append(amountTd);
         tr.append(plnTd);
         tr.append(btnDelete);
         resultBid = 0;
+        amountInput = $("input[name=amount]").val("");
 
-
+        totalBid = tabResultBid.reduce(function(prev, curr) {
+          return (Number(prev) + Number(curr)).toFixed(2);
+        });
 
       } else if (checkboxValue === "ask") {
-        console.log(checkboxValue);
+        askTable.css("display","table");
+        divRow.css("display","block");
+        resultAsk = amountInputNumber * currencyNumber;
+        resultAsk = resultAsk.toFixed(2);
+        tabResultAsk.push(resultAsk);
+        let currencyCode = $("div.inserted-currency").text().substring(0,4),
+            tr = $("<tr class='active'></tr>"),
+            currencyTd = $("<td>").text(currencyCode),
+            amountTd = $("<td>").text(amountInputNumber),
+            plnTd = $("<td>").text(resultAsk),
+            btnDelete = $("<button class='btn delete'>").text("Delete");
+
+        askList.append(tr);
+        tr.append(currencyTd);
+        tr.append(amountTd);
+        tr.append(plnTd);
+        tr.append(btnDelete);
+        resultBid = 0;
+        amountInput = $("input[name=amount]").val("");
+
+        totalAsk = tabResultAsk.reduce(function(prev, curr) {
+          return (Number(prev) + Number(curr)).toFixed(2);
+        });
+        // DODAĆ UJEMNĄ WARTOŚĆ DLA KUPNA WALUTY
+
       }
 
     } else {
@@ -113,9 +146,38 @@ $(function () {
     }
   });
 
-  $("table#bidAskTable").on("click", ".delete", function(){
+  $("table#bidTable").on("click", ".delete", function(){
     tabResultBid.splice(tabResultBid.indexOf($(this).prev().text()), 1);
-    console.log(tabResultBid);
+
+
+    if (tabResultBid.length > 0) {
+      totalBid = tabResultBid.reduce(function(prev, curr) {
+        return (Number(prev) + Number(curr)).toFixed(2);
+      });
+    } else {
+      totalBid = 0;
+      bidTable.css("display","none");
+    }
+
+
+
+    $(this).parent().remove();
+  });
+
+  $("table#askTable").on("click", ".delete", function(){
+    tabResultAsk.splice(tabResultAsk.indexOf($(this).prev().text()), 1);
+
+
+    if (tabResultAsk.length > 0) {
+      totalAsk = tabResultAsk.reduce(function(prev, curr) {
+        return (Number(prev) + Number(curr)).toFixed(2);
+    });
+  } else {
+    totalAsk = 0;
+    askTable.css("display","none");
+  }
+
+
     $(this).parent().remove();
   });
 
