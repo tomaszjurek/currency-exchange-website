@@ -62,16 +62,36 @@
             <form id="calculator" action="#" method="post">
               <label for="chooseAmount">Choose the amount of currency:</label>
               <input type="text" name="amount" value="" >
+              <br/>
               <button id="exchange" class="btn" type="submit">Exchange</button>
             </form>
             <hr/>
-            <table id="bidAskTable" class="table table-hover table-responsive">
+          </div>
+        </div>
+        <div style="display: none" class="row secondrow">
+          <div class="col">
+            <table style="display: none" id="bidTable" class="table table-hover table-responsive hidden-table">
               <thead>
                 <tr>
                   <th>Sold</th>
                   <th>Amount</th>
                   <th>PLN</th>
-                  <th>Delete</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Bid table -->
+              </tbody>
+            </table>
+          </div>
+          <div class="col">
+            <table style="display: none" id="askTable" class="table table-hover table-responsive hidden-table">
+              <thead>
+                <tr>
+                  <th>Bought</th>
+                  <th>Amount</th>
+                  <th>PLN</th>
+                  <th></th>
                 </tr>
               </thead>
               <tbody>
