@@ -1,6 +1,6 @@
 $(function () {
 
-  const nbpApi  = "http://api.nbp.pl/api/exchangerates/tables/c/?format=json";
+  const nbpApi  = "https://api.nbp.pl/api/exchangerates/tables/c/?format=json";
   let tabResultBid = [],
       tabResultAsk = [],
       totalAsk,
@@ -146,9 +146,9 @@ $(function () {
     }
   });
 
+// Button delete bid tr and update sum
   $("table#bidTable").on("click", ".delete", function(){
     tabResultBid.splice(tabResultBid.indexOf($(this).prev().text()), 1);
-
 
     if (tabResultBid.length > 0) {
       totalBid = tabResultBid.reduce(function(prev, curr) {
@@ -158,15 +158,12 @@ $(function () {
       totalBid = 0;
       bidTable.css("display","none");
     }
-
-
-
     $(this).parent().remove();
   });
 
+// Button delete ask tr and update sum
   $("table#askTable").on("click", ".delete", function(){
     tabResultAsk.splice(tabResultAsk.indexOf($(this).prev().text()), 1);
-
 
     if (tabResultAsk.length > 0) {
       totalAsk = tabResultAsk.reduce(function(prev, curr) {
@@ -176,8 +173,6 @@ $(function () {
     totalAsk = 0;
     askTable.css("display","none");
   }
-
-
     $(this).parent().remove();
   });
 
