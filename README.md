@@ -1,6 +1,9 @@
 # currency-exchange-website
 Website which will take data from NBP API. There will be a exchange calculator too.  
 
+## Live preview
+https://tomaszjurek.github.io/currency-exchange-website/ 
+
 ## Getting Started
 ```
 git clone https://github.com/tomaszjurek/currency-exchange-website.git
