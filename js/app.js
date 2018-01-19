@@ -3,8 +3,8 @@ $(function () {
   const nbpApi  = "https://api.nbp.pl/api/exchangerates/tables/c/?format=json";
   let tabResultBid = [],
       tabResultAsk = [],
-      totalAsk,
-      totalBid,
+      totalAsk = 0,
+      totalBid = 0,
       index = 0,
       alert = $("div.alert"),
       bidTable = $("table#bidTable"),
@@ -164,7 +164,6 @@ $(function () {
 // Button delete ask tr and update sum
   $("table#askTable").on("click", ".delete", function(){
     tabResultAsk.splice(tabResultAsk.indexOf($(this).prev().text()), 1);
-
     if (tabResultAsk.length > 0) {
       totalAsk = tabResultAsk.reduce(function(prev, curr) {
         return (Number(prev) + Number(curr)).toFixed(2);
@@ -176,4 +175,10 @@ $(function () {
     $(this).parent().remove();
   });
 
+// Event on button add all
+  $("button#sum").on("click", function(){
+    let total = totalBid - totalAsk;
+    total.toFixed(2);
+    $("div#divSum").find("div.total").text("Your total is: " + total + " zł");
+    });
 });

@@ -14,6 +14,12 @@ body {
     margin-bottom: 10px;
     color: $navHoverColor;
   }
+  .total {
+    border: 2px solid $shadowColor;
+    text-align: center;
+    margin-top: 15px;
+    color: $navHoverColor;
+  }
   .secondrow {
     margin-top: 20px;
   }
