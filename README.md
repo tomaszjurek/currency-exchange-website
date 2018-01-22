@@ -1,5 +1,5 @@
 # currency-exchange-website
-Website which will take data from NBP API. There will be a exchange calculator too.  
+Website which take data from NBP API. On this website there is exchange calculator and table with up-to-date PLN exchange rates.  
 
 ## Live preview
 https://tomaszjurek.github.io/currency-exchange-website/ 
@@ -16,9 +16,9 @@ open index.html file.
 
 ## Built With
 * HTML 5
-* CSS 3
 * SCSS
 * JavaScript ES6
 * Bootstrap 4
+* Ajax
 * Webpack
 * Gulp
