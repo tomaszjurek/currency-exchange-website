@@ -4,12 +4,8 @@ $(function () {
   let tabResultBid = [],
       tabResultAsk = [],
       totalAsk = 0,
-      totalBid = 0,
-      index = 0,
-      alert = $("div.alert"),
-      bidTable = $("table#bidTable"),
-      askTable = $("table#askTable"),
-      divRow = $("div.row.secondrow");
+      totalBid = 0;
+
 
 // Inject table with currencies
   let insertCurrency = (currency) => {
@@ -66,8 +62,8 @@ $(function () {
       choosenCurrency.text(optionSelected.val() + " " + optionSelected.attr("data-ask"));
       calculator.append(choosenCurrency);
     } else if (checkboxValue === undefined) {
-      alert.find("strong").text("Please choose bid or ask");
-      alert.css("display","block");
+      $("div.alert").find("strong").text("Please choose bid or ask");
+      $("div.alert").css("display","block");
       calculator.append(choosenCurrency);
     }
   });
@@ -88,8 +84,8 @@ $(function () {
 
     if (amountInput !== "" & amountInputNumber >= 0) {
       if (checkboxValue === "bid") {
-        bidTable.css("display","table");
-        divRow.css("display","block");
+        $("table#bidTable").css("display","table");
+        $("div.row.secondrow").css("display","block");
         resultBid = amountInputNumber * currencyNumber;
         resultBid = resultBid.toFixed(2);
         tabResultBid.push(resultBid);
@@ -98,7 +94,7 @@ $(function () {
             currencyTd = $("<td>").text(currencyCodeBid),
             amountTd = $("<td>").text(amountInputNumber),
             plnTd = $("<td>").text(resultBid),
-            btnDelete = $("<button class='btn delete'>").text("Delete");
+            btnDelete = $("<td class='btn delete'><button></td>").text("Delete");
 
         bidList.append(tr);
         tr.append(currencyTd);
@@ -113,8 +109,8 @@ $(function () {
         });
 
       } else if (checkboxValue === "ask") {
-        askTable.css("display","table");
-        divRow.css("display","block");
+        $("table#askTable").css("display","table");
+        $("div.row.secondrow").css("display","block");
         resultAsk = amountInputNumber * currencyNumber;
         resultAsk = resultAsk.toFixed(2);
         tabResultAsk.push(resultAsk);
@@ -123,7 +119,7 @@ $(function () {
             currencyTd = $("<td>").text(currencyCode),
             amountTd = $("<td>").text(amountInputNumber),
             plnTd = $("<td>").text(resultAsk),
-            btnDelete = $("<button class='btn delete'>").text("Delete");
+            btnDelete = $("<td class='btn delete'><button></td>").text("Delete");
 
         askList.append(tr);
         tr.append(currencyTd);
@@ -135,14 +131,12 @@ $(function () {
 
         totalAsk = tabResultAsk.reduce(function(prev, curr) {
           return (Number(prev) + Number(curr)).toFixed(2);
-        });
-        // DODAĆ UJEMNĄ WARTOŚĆ DLA KUPNA WALUTY
-
+      });
       }
 
     } else {
-      alert.find("strong").text("Please enter Your amount or choose bid/ask");
-      alert.css("display","block");
+      $("div.alert").find("strong").text("Please enter Your amount or choose bid/ask");
+      $("div.alert").css("display","block");
     }
   });
 
@@ -156,7 +150,8 @@ $(function () {
       });
     } else {
       totalBid = 0;
-      bidTable.css("display","none");
+      $("table#bidTable").css("display","none");
+      $("div#divSum").find("div.total").text("Your total is: " + totalAsk + " zł");
     }
     $(this).parent().remove();
   });
@@ -170,14 +165,15 @@ $(function () {
     });
   } else {
     totalAsk = 0;
-    askTable.css("display","none");
+    $("table#askTable").css("display","none");
+    $("div#divSum").find("div.total").text("Your total is: " + totalBid + " zł");
   }
     $(this).parent().remove();
   });
 
 // Event on button add all
   $("button#sum").on("click", function(){
-    let total = totalBid - totalAsk;
+    var total = totalBid - totalAsk;
     total.toFixed(2);
     $("div#divSum").find("div.total").text("Your total is: " + total + " zł");
     });
